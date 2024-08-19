@@ -214,3 +214,34 @@ LICENSE.txt  README.txt  assets  elements.html  generic.html  html5up-phantom.zi
 [ashu@ip-172-31-16-156 ~]$
 
 ```
+
+### building image using dockerfile 
+
+```
+[ashu@ip-172-31-16-156 html-sample-app]$ ls
+Dockerfile  LICENSE.txt  README.txt  assets  elements.html  generic.html  html5up-phantom.zip  images  index.html
+[ashu@ip-172-31-16-156 html-sample-app]$
+[ashu@ip-172-31-16-156 html-sample-app]$
+[ashu@ip-172-31-16-156 html-sample-app]$ docker  build  -t  ashuwebapp:appv1  .
+[+] Building 10.9s (5/7)                                                                                                                     docker:default
+[+] Building 46.2s (5/7)                                                                                                                     docker:default
+ => [internal] load build definition from Dockerfile                                                                                                   0.0s
+ => => transferring dockerfile: 598B                                                                                                                   0.0s
+ => [internal] load metadata for docker.io/library/oraclelinux:8.7                                                                                     0.5s
+ => [internal] load .dockerignore                                                                                                                      0.0s
+ => => transferring context: 2B                                                                                                                        0.0s
+ => [1/3] FROM docker.io/library/oraclelinux:8.7@sha256:74a283a310b2853af75555a5be11304f1502b042daf8269534d8b6b0125d3a18                               6.6s
+ => => resolve docker.io/library/oraclelinux:8.7@sha256:74a283a310b2853af75555a5be11304f1502b042daf8269534d8b6b0125d3a18                               0.0s
+ => => sha256:74a283a310b2853af75555a5be11304f1502b042daf8269534d8b6b0125d3a18 547B / 547B                                                             0.0s
+ => => sha256:9384443b9af48c70004e27819f434529e88c8072de46835e1e064a10559088dd 529B / 529B                                                             0.0s
+ => => sha256:64a9493ed8405e5a1b9515929173bc342fed8a9f35451e09b815c0be029afc8a 1.48kB / 1.48kB                                                         0.0s
+ => => sha256:06d6f22c2168ed40d437d9165a6c726f0bcaa2fd76ab943ed29f9ee4216e11fb 88.44MB / 88.44MB                                                       1.6s
+ => => extracting sha256:06d6f22c2168ed40d437d9165a6c726f0bcaa2fd76ab943ed29f9ee4216e11fb                                                              4.4s
+ => [internal] load build context                                                                                                                      0.1s
+ => => transferring context: 3.56MB                                                                                                                    0.1s
+ => [2/3] RUN dnf install httpd -y                                                                                                                    39.0s
+ => => # Oracle Linux 8 BaseOS Latest (x86_64)            65 MB/s |  79 MB     00:01
+ => => # Oracle Linux 8 Application Stream (x86_64)       66 MB/s |  62 MB     00:00
+ => => # Last metadata expiration check: 0:00:17 ago on Mon Aug 19 12:14:53 2024.
+```
+
