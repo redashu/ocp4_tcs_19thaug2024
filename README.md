@@ -1,1 +1,4 @@
-# ocp4_tcs_19thaug2024
+## Training timing 
+
+<img src="time.png">
+
