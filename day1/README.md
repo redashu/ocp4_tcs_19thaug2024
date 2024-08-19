@@ -22,5 +22,8 @@
 
 <img src="ks.png">
 
+# How to access jump server using ssh from windows machine 
+
+<img src="ssh1.png">
 
 
