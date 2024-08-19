@@ -132,3 +132,85 @@ ubuntu       latest    edbfe74c41f8   2 weeks ago   78.1MB
 
 ```
 
+### lets try creating containers 
+
+<img src="contn1.png">
+
+### Creating container from the image 
+
+```
+[ashu@ip-172-31-16-156 ~]$ docker run  --name ashuc1  -d     alpine   ping localhost
+160df83f66ccbabc58e9885112adef9c104d4470adccaceedb04aca55975bb66
+```
+
+### listing running contaienrs 
+
+```
+[ashu@ip-172-31-16-156 ~]$ docker  ps
+CONTAINER ID   IMAGE     COMMAND            CREATED          STATUS          PORTS     NAMES
+160df83f66cc   alpine    "ping localhost"   58 seconds ago   Up 57 seconds             ashuc1
+```
+
+### stoping running containers 
+
+```
+[ashu@ip-172-31-16-156 ~]$ docker  stop ashuc1
+ashuc1
+[ashu@ip-172-31-16-156 ~]$ docker  ps
+CONTAINER ID   IMAGE     COMMAND            CREATED         STATUS         PORTS     NAMES
+4b59ba02d973   alpine    "ping localhost"   2 minutes ago   Up 2 minutes             siddhant
+ed922df2ab3b   alpine    "ping localhost"   3 minutes ago   Up 3 minutes             asif7
+440ce62ba27f   alpine    "ping localhost"   6 minutes ago   Up 6 minutes             sachinalp1
+[ashu@ip-172-31-16-156 ~]$
+```
+
+### listing all contaienr and starting it back 
+
+```
+[ashu@ip-172-31-16-156 ~]$ docker  ps -a
+CONTAINER ID   IMAGE     COMMAND            CREATED          STATUS                        PORTS     NAMES
+4b59ba02d973   alpine    "ping localhost"   3 minutes ago    Exited (137) 33 seconds ago             siddhant
+ed922df2ab3b   alpine    "ping localhost"   4 minutes ago    Up 4 minutes                            asif7
+74707174ecd1   ubuntu    "/bin/bash"        6 minutes ago    Exited (0) 6 minutes ago                boring_wilbur
+440ce62ba27f   alpine    "ping localhost"   6 minutes ago    Up 6 minutes                            sachinalp1
+160df83f66cc   alpine    "ping localhost"   8 minutes ago    Exited (137) 56 seconds ago             ashuc1
+58b10261578d   alpine    "/bin/sh"          8 minutes ago    Exited (0) 8 minutes ago                awesome_heyrovsky
+3e94b4934dc5   alpine    "/bin/sh"          12 minutes ago   Exited (0) 12 minutes ago               laughing_yonath
+
+
+[ashu@ip-172-31-16-156 ~]$ docker  start  ashuc1
+ashuc1
+
+
+[ashu@ip-172-31-16-156 ~]$ docker  ps
+CONTAINER ID   IMAGE     COMMAND            CREATED         STATUS         PORTS     NAMES
+ed922df2ab3b   alpine    "ping localhost"   5 minutes ago   Up 5 minutes             asif7
+160df83f66cc   alpine    "ping localhost"   9 minutes ago   Up 1 second              ashuc1
+```
+
+
+### Understanding container image building process
+
+<img src="process.png">
+
+### download sample git clone 
+
+```
+[ashu@ip-172-31-16-156 ~]$ git clone https://github.com/schoolofdevops/html-sample-app.git
+Cloning into 'html-sample-app'...
+remote: Enumerating objects: 74, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 74 (delta 0), reused 0 (delta 0), pack-reused 71 (from 1)
+Receiving objects: 100% (74/74), 1.38 MiB | 37.21 MiB/s, done.
+Resolving deltas: 100% (5/5), done.
+
+[ashu@ip-172-31-16-156 ~]$
+[ashu@ip-172-31-16-156 ~]$
+[ashu@ip-172-31-16-156 ~]$ ls
+html-sample-app
+[ashu@ip-172-31-16-156 ~]$ ls   html-sample-app/
+LICENSE.txt  README.txt  assets  elements.html  generic.html  html5up-phantom.zip  images  index.html
+[ashu@ip-172-31-16-156 ~]$
+
+```
