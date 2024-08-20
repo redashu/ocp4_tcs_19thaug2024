@@ -93,4 +93,40 @@ Removing login credentials for https://index.docker.io/v1/
 
 <img src="solv1.png">
 
+# K8s understanding 
+
+### basic info 
+<img src="basic.png">
+
+## High level architecture 
+
+<img src="arch1.png">
+
+## Control plane apiServer 
+
+<img src="apis.png">
+
+### schedular in openshift / k8s 
+
+<img src="sch.png">
+
+### etcd the persistent storage of k8s / ocp 
+
+<img src="etcd.png">
+
+## Worker Node components 
+
+### Cadvisor 
+
+[click_here](https://github.com/google/cadvisor)
+
+### COntainer runtimes 
+
+<img src="cre.png">
+
+
+
+
+
+
 
