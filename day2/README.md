@@ -80,3 +80,17 @@ Removing login credentials for https://index.docker.io/v1/
 [ashu@ip-172-31-16-156 ~]$ 
 
 ```
+
+### From Monolith to Microservices 
+
+<img src="m1.png">
+
+### having too much containers in multple machine gonna lead to new problem statement 
+
+<img src="prob1.png">
+
+## Container orchestration problem solution by given tools and tech 
+
+<img src="solv1.png">
+
+
