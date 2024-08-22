@@ -270,3 +270,18 @@ pod "sachindpod1" deleted
 pod "sidpod1" deleted
 
 ```
+
+## create pod 
+
+```
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  create  -f  ashuwebpod.yaml 
+pod/ashupod1 created
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get  pods
+NAME        READY   STATUS    RESTARTS   AGE
+ashupod1    1/1     Running   0          7s
+ranjitpod   1/1     Running   0          3m37s
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+
+
+```
+
