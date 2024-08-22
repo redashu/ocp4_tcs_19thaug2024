@@ -285,3 +285,28 @@ ranjitpod   1/1     Running   0          3m37s
 
 ```
 
+## few more pod operations 
+
+### logs 
+
+```
+oc logs  ashupod1
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.131.0.15. Set the 'ServerName' directive globally to suppress this message
+[ashu@ip-172-31-16-156 ~]$ 
+
+```
+
+### login to container inside pod 
+
+```
+[ashu@ip-172-31-16-156 ~]$ oc exec  -it  ashupod1  -- bash 
+[root@ashupod1 /]# 
+[root@ashupod1 /]# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+[root@ashupod1 /]# cd  /var/www/html/
+[root@ashupod1 html]# ls
+Dockerfile  LICENSE.txt  README.txt  assets  elements.html  generic.html  html5up-phantom.zip  images  index.html
+[root@ashupod1 html]# exit
+exit
+
+```
