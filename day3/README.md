@@ -257,3 +257,16 @@ sachin        1/1     Running   0          66s     10.130.2.27   ip-10-0-90-155.
 sachindpod1   1/1     Running   0          9m37s   10.131.0.12   ip-10-0-95-84.ec2.internal    <none>           <none>
 sidpod1       1/1     Running   0          12m     10.131.0.10   ip-10-0-95-84.ec2.internal    <none>           <none>
 ```
+
+### Delete all the pods 
+
+```
+[ashu@ip-172-31-16-156 ~]$ oc  delete pods --all
+pod "akkipod3" deleted
+pod "ashupod1" deleted
+pod "asifpod2" deleted
+pod "sachin" deleted
+pod "sachindpod1" deleted
+pod "sidpod1" deleted
+
+```
