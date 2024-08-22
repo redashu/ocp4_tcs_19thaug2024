@@ -141,3 +141,119 @@ Kubernetes control plane is running at https://api.tcs-cluster.ashutoshh.xyz:644
 
 ```
 
+### from k8s to openshift 
+
+<img src="ocp1.png">
+
+```
+[ashu@ip-172-31-16-156 ~]$ oc   get nodes
+NAME                          STATUS   ROLES                  AGE     VERSION
+ip-10-0-21-91.ec2.internal    Ready    control-plane,master   5h16m   v1.29.6+aba1e8d
+ip-10-0-31-38.ec2.internal    Ready    control-plane,master   5h16m   v1.29.6+aba1e8d
+ip-10-0-51-187.ec2.internal   Ready    control-plane,master   5h16m   v1.29.6+aba1e8d
+ip-10-0-80-83.ec2.internal    Ready    worker                 4h59m   v1.29.6+aba1e8d
+ip-10-0-90-155.ec2.internal   Ready    worker                 4h59m   v1.29.6+aba1e8d
+ip-10-0-95-205.ec2.internal   Ready    worker                 4h59m   v1.29.6+aba1e8d
+ip-10-0-95-84.ec2.internal    Ready    worker                 4h59m   v1.29.6+aba1e8d
+[ashu@ip-172-31-16-156 ~]$ oc   cluster-info 
+Kubernetes control plane is running at https://api.tcs-cluster.ashutoshh.xyz:6443
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+```
+
+### openshift architecture 
+
+<img src="ocp2.png">
+
+
+### How container is getting created 
+
+<img src="cc1.png">
+
+
+### container image to PODs 
+
+<img src="pod1.png">
+
+### creating pods 
+
+<img src="method1.png">
+
+### basic things to create pods 
+
+<img src="need.png">
+
+### checking pods 
+
+```
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods
+No resources found in default namespace.
+
+```
+
+### creating pods using oc cli 
+
+```
+ashu@ip-172-31-16-156 ~]$ oc  run  ashupod1  --image=dockerashu/ashutcs:webappv1  --port 80 
+pod/ashupod1 created
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods
+NAME       READY   STATUS              RESTARTS   AGE
+ashupod1   0/1     ContainerCreating   0          7s
+[ashu@ip-172-31-16-156 ~]$ 
+
+
+```
+### troubleshooting 1 -- imagepullbackOff / errorimagepull
+
+```
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods
+NAME       READY   STATUS             RESTARTS   AGE
+akkipod2   0/1     ImagePullBackOff   0          54s
+ashupod1   1/1     Running            0          3m12s
+ranjitc    1/1     Running            0          93s
+sachin     0/1     ErrImagePull       0          40s
+sidpod1    1/1     Running            0          2m49s
+
+
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ oc   describe  pod  akkipod2  
+Name:             akkipod2
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             ip-10-0-95-84.ec2.internal/10.0.95.84
+Start Time:       Thu, 22 Aug 2024 10:13:37 +0000
+Labels:           run=akkipod2
+Annotations:      k8s.ovn.org/pod-networks:
+                    {"default":{"ip_addresses":["10.131.0.11/23"],"mac_address":"0a:58:0a:83:00:0b","gateway_ips":["10.131.0.1"],"routes":[{"dest":"10.128.0.0...
+                  k8s.v1.cni.cncf.io/network-status:
+                    [{
+                        "name": "ovn-kubernetes",
+                        "interface": "eth0",
+                        "ips": [
+
+```
+
+
+### more oc commands 
+
+```
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods
+NAME          READY   STATUS    RESTARTS   AGE
+ashupod1      1/1     Running   0          2m
+asifpod1      1/1     Running   0          102s
+sachindpod1   1/1     Running   0          8m26s
+sidpod1       1/1     Running   0          11m
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods  ashupod1  -o wide 
+NAME       READY   STATUS    RESTARTS   AGE     IP            NODE                          NOMINATED NODE   READINESS GATES
+ashupod1   1/1     Running   0          2m16s   10.130.2.24   ip-10-0-90-155.ec2.internal   <none>           <none>
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods    -o wide 
+NAME          READY   STATUS    RESTARTS   AGE     IP            NODE                          NOMINATED NODE   READINESS GATES
+akkipod3      1/1     Running   0          64s     10.131.0.14   ip-10-0-95-84.ec2.internal    <none>           <none>
+ashupod1      1/1     Running   0          3m11s   10.130.2.24   ip-10-0-90-155.ec2.internal   <none>           <none>
+asifpod1      1/1     Running   0          2m53s   10.130.2.25   ip-10-0-90-155.ec2.internal   <none>           <none>
+sachin        1/1     Running   0          66s     10.130.2.27   ip-10-0-90-155.ec2.internal   <none>           <none>
+sachindpod1   1/1     Running   0          9m37s   10.131.0.12   ip-10-0-95-84.ec2.internal    <none>           <none>
+sidpod1       1/1     Running   0          12m     10.131.0.10   ip-10-0-95-84.ec2.internal    <none>           <none>
+```
