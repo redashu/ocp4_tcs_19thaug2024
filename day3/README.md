@@ -310,3 +310,27 @@ Dockerfile  LICENSE.txt  README.txt  assets  elements.html  generic.html  html5u
 exit
 
 ```
+
+# Networking in OCP 
+
+<img src="net1.png">
+
+## OCP in cloud high level networking 
+
+<img src="net2.png">
+
+## after master and worker node networking 
+
+# Pod container networking understanding 
+
+<img src="podnet1.png">
+
+##  CNM vs CNI 
+
+<img src="podnet2.png">
+
+### CNI providing nodes to ip 
+
+<img src="podnet3.png">
+
+
