@@ -284,5 +284,85 @@ openshift    ExternalName   <none>          kubernetes.default.svc.cluster.local
 
 ```
 
+## Understanding namespace or projects in openshift 
+
+<img src="ns.png">
+
+### cleaning up project resources 
+
+```
+oc  delete deploy,service  --all
+deployment.apps "ashuapp" deleted
+deployment.apps "sachinapp" deleted
+deployment.apps "sachindapp" deleted
+deployment.apps "siddeploy" deleted
+service "ashulb1" deleted
+service "asiflb1" deleted
+service "kubernetes" deleted
+
+```
+
+### projects in ocp 
+
+<img src="ocp.png">
+
+### listing namespaces 
+
+```
+oc  get  namespaces
+NAME                                               STATUS   AGE
+default                                            Active   32h
+kube-node-lease                                    Active   32h
+kube-public                                        Active   32h
+kube-system                                        Active   32h
+openshift                                          Active   32h
+openshift-apiserver                                Active   32h
+
+```
+
+### using projects 
+
+```
+oc  projects
+You have access to the following projects and can switch between them with ' project <projectname>':
+
+default
+kube-node-lease
+kube-public
+kube-system
+openshift
+openshift-apiserver
+openshift-apiserver-operator
+openshift-authentication
+openshift-authentication-operator
+
+```
+
+### creaitng and switching to a new project 
+
+```
+ oc  new-project   ashu-app-project
+Now using project "ashu-app-project" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.43 -- /agnhost serve-hostname
+
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+
+```
+### checking current project 
+
+```
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc project
+Using project "ashu-app-project" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+
+```
 
 
