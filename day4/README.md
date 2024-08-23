@@ -222,6 +222,67 @@ metadata:
 
 <img src="label.png">
 
+### showing label of pods 
+
+```
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get pods --show-labels
+NAME                     READY   STATUS    RESTARTS   AGE     LABELS
+ashuapp-99bdc766-9mcvl   1/1     Running   0          6m12s   app=ashuapp,pod-template-hash=99bdc766
+ashuapp-99bdc766-d8b9v   1/1     Running   0          6m42s   app=ashuapp,pod-template-hash=99bdc766
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+
+
+```
+
+### printing pods using labels 
+
+```
+ashu@ip-172-31-16-156 ocp_manifests]$ oc  get pods -l app=akki
+NAME                    READY   STATUS    RESTARTS   AGE
+akki-597fcb6ff9-b54zl   1/1     Running   0          4m53s
+akki-597fcb6ff9-v7hzt   1/1     Running   0          4m54s
+akki-597fcb6ff9-w2lt6   1/1     Running   0          4m53s
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get pods -l app=akki,pod-template-hash=597fcb6ff9
+NAME                    READY   STATUS    RESTARTS   AGE
+akki-597fcb6ff9-b54zl   1/1     Running   0          5m6s
+akki-597fcb6ff9-v7hzt   1/1     Running   0          5m7s
+akki-597fcb6ff9-w2lt6   1/1     Running   0          5m6s
+
+```
+### type of  service in ocp 
+
+<img src="stype.png">
+
+### creating clusterIP type service 
+
+<img src="sc.png">
+
+### demo 
+
+```
+329  oc  expose deployment ashuapp   --type ClusterIP --port 80 --name ashulb1 --dry-run=client -o yaml 
+  330  oc  get  pods --show-labels 
+  331  hsitor
+  332  history 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  expose deployment ashuapp   --type ClusterIP --port 80 --name ashulb1 --dry-run=client -o yaml  >service.yaml
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc create -f service.yaml 
+service/ashulb1 created
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get  svc 
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP                            PORT(S)   AGE
+ashulb1      ClusterIP      172.30.16.221   <none>                                 80/TCP    4s
+kubernetes   ClusterIP      172.30.0.1      <none>                                 443/TCP   31h
+openshift    ExternalName   <none>          kubernetes.default.svc.cluster.local   <none>    31h
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get  service
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP                            PORT(S)   AGE
+ashulb1      ClusterIP      172.30.16.221   <none>                                 80/TCP    9s
+kubernetes   ClusterIP      172.30.0.1      <none>                                 443/TCP   31h
+openshift    ExternalName   <none>          kubernetes.default.svc.cluster.local   <none>    31h
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+
+```
 
 
 
