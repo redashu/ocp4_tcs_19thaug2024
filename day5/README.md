@@ -339,4 +339,115 @@ ashuapp-fbcd8f4bb-r5wz9   1/1     Running   0          15s
 
 ```
 
+### history 
+
+```
+45  oc  project 
+  446  oc  get  project
+  447  oc  get   deploy  -n sachind-app-project 
+  448  oc  get   pods  -n sachind-app-project 
+  449  docker  images  | grep ashu
+  450  docker  run -dit  --name ashucx1  dockerashu/ashutcs:webappv1 
+  451  docker ps
+  452  docker  exec -it ashucx1  bash 
+  453  oc  get   pods  -n sachind-app-project 
+  454  NAME                          READY   STATUS             RESTARTS      AGE
+  455  sachindapps-8cf7d65ff-rvvpd   0/1     CrashLoopBackOff   5 (78s ago)   4m16s
+  456  oc project
+  457  oc logs  sachindapps-8cf7d65ff-rvvpd   -n  sachind-app-project 
+  458  history 
+  459  oc adm policy add-scc-to-user anyuid -z default
+  460  oc  get  pod
+  461  ls
+  462  oc  create  deployment  ashuday6app --image=dockerashu/ashutcs:webappv1 --port 80 --dry-run=client -o yaml >day6_deploy.yaml 
+  463  oc create  -f day6_deploy.yaml 
+  464  oc  get  deploy 
+  465  oc  get  pods
+  466  oc  get  deploy 
+  467  oc  scale deployment  ashuday6app  --replicas 2 
+  468  oc  get  deploy 
+  469  oc  get  pods
+  470  ls
+  471  oc  get deploy 
+  472  oc expose deployment  ashuday6app   --type ClusterIP --port 80 --name ashulb6 --dry-run=client -o yaml >day6svc.yml
+  473  oc get svc 
+  474  oc get service 
+  475  oc create -f day6svc.yml 
+  476  oc get  svc
+  477  oc get  ep 
+  478  oc  get po -o wide
+  479  oc  get  deploy 
+  480  oc get  svc
+  481  oc  get  ep
+  482  oc get nodes
+  483  oc  get projects  | grep ingress
+  484  oc  get  deploy  -n  openshift-ingress
+  485  oc  get  pod  -n  openshift-ingress
+  486  oc  get svc  -n  openshift-ingress
+  487  oc  get deploy 
+  488  oc  get pods
+  489  oc get svc
+  490  oc  get  ep 
+  491  oc  expose service ashulb6   --dry-run=client -o yaml 
+  492  oc  get  svc
+  493  oc expose service ashulb6 --dry-run=client -o yaml >day6route.yaml 
+  494  oc create -f day6route.yaml 
+  495  oc expose service --name  ashulb6 --dry-run=client -o yaml >day6route.yaml 
+  496  oc expose service ashulb6
+  497  oc delete route ashulb6
+  498  oc expose service ashulb6 --dry-run=client 
+  499  oc expose service ashulb6 --dry-run=client  -o yaml 
+  500  oc expose service ashulb6 --dry-run=client  -o yaml >day6route.yaml 
+  501  oc create -f day6route.yaml 
+  502  oc expose service ashulb6 
+  503  oc  get  routes
+  504  oc  get svc 
+  505  oc  delete all --all
+  506  oc  get  deploy,svc,routes
+  507  oc  get projects 
+  508  oc  get projects   | grep console 
+  509  oc  get deploy  -n  openshift-console
+  510  oc  get po  -n  openshift-console
+  511  oc  get svc  -n  openshift-console
+  512  oc  get routes  -n  openshift-console
+  513  oc  get secrets  -n  openshift-console
+  514  oc  get secrets console-oauth-config  -n  openshift-console
+  515  oc  get secrets console-oauth-config  -n  openshift-console -o yaml
+  516  base64 -d
+  517  cd
+  518  exit
+  519  ls
+  520  cd ocp_manifests/
+  521  ls
+  522  oc create -f day6_deploy.yaml 
+  523  oc  get deploy
+  524  docker  images  | grep ashu
+  525  docker  tag   ashuwebapp:appv1  tcsindia.azurecr.io/ashuapp:version1 
+  526  docker login  tcsindia.azurecr.io
+  527  docker  push tcsindia.azurecr.io/ashuapp:version1
+  528  ls
+  529  oc  create deployment  ashuapp --image=tcsindia.azurecr.io/ashuapp:version1 --port 80 --dry-run=client -o yaml >private.yaml 
+  530  oc create -f private.yaml 
+  531  oc  get deploy 
+  532  oc  get  pods
+  533  oc  describe deployment  ashuapp
+  534  oc  get pods
+  535  oc  describe pod ashuapp-84d89b4df5-54gkr 
+  536  oc  get events
+  537  oc  get pods
+  538  ls
+  539  oc  get deploy
+  540  oc delete deploy ashuapp 
+  541  oc  create secret 
+  542  oc create secret docker-registry  ashu-reg-cred --docker-server tcsindia.azurecr.io --docker-username tcsindia  --docker-password="gY4EL/xOLl+ACRClq3uH" --dry-run=client -o yaml 
+  543  oc create secret docker-registry  ashu-reg-cred --docker-server tcsindia.azurecr.io --docker-username tcsindia  --docker-password="gtmH" --dry-run=client -o yaml  >regsecret.yaml 
+  544  oc create -f regsecret.yaml 
+  545  oc get secrets 
+  546  ls
+  547  vim private.yaml 
+  548  cat private.yaml 
+  549  oc  create -f private.yaml 
+
+```
+
 
