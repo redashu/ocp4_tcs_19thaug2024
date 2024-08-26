@@ -181,3 +181,58 @@ NAME      HOST/PORT                                                 PATH   SERVI
 ashulb6   ashulb6-ashu-app-project.apps.tcs-cluster.ashutoshh.xyz          ashulb6    80                   None
 
 ```
+
+### network flow in openshift to access any app hosted in pods 
+
+<img src="nhost.png">
+
+### cleaning up current project resources 
+
+```
+oc  delete all --all
+pod "ashuday6app-f6ccbc8c4-gb5mq" deleted
+pod "ashuday6app-f6ccbc8c4-mtr6l" deleted
+service "ashulb6" deleted
+deployment.apps "ashuday6app" deleted
+replicaset.apps "ashuday6app-f6ccbc8c4" deleted
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+route.route.openshift.io "ashulb6" deleted
+
+```
+
+## understanding other oc client options 
+
+<img src="oc_cli.png">
+
+### checking ocp web console details 
+
+```
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get projects   | grep console 
+openshift-console                                                 Active
+openshift-console-operator                                        Active
+openshift-console-user-settings                                   Active
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get deploy  -n  openshift-console
+NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+console     2/2     2            2           4d7h
+downloads   2/2     2            2           4d7h
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get po  -n  openshift-console
+NAME                         READY   STATUS    RESTARTS        AGE
+console-8554db79db-9krpw     1/1     Running   3               4d6h
+console-8554db79db-sthvk     1/1     Running   3               4d6h
+downloads-6456675cbd-cvc64   1/1     Running   3               4d7h
+downloads-6456675cbd-gtg6j   1/1     Running   16 (6h6m ago)   4d7h
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get svc  -n  openshift-console
+NAME        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+console     ClusterIP   172.30.141.43   <none>        443/TCP   4d7h
+downloads   ClusterIP   172.30.99.214   <none>        80/TCP    4d7h
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get routes  -n  openshift-console
+NAME        HOST/PORT                                                    PATH   SERVICES    PORT    TERMINATION          WILDCARD
+console     console-openshift-console.apps.tcs-cluster.ashutoshh.xyz            console     https   reencrypt/Redirect   None
+downloads   downloads-openshift-console.apps.tcs-cluster.ashutoshh.xyz          downloads   http    edge/Redirect        None
+```
+
