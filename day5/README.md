@@ -236,3 +236,107 @@ console     console-openshift-console.apps.tcs-cluster.ashutoshh.xyz            
 downloads   downloads-openshift-console.apps.tcs-cluster.ashutoshh.xyz          downloads   http    edge/Redirect        None
 ```
 
+## Deploying private registry container to opeshift 
+
+```
+[ashu@ip-172-31-16-156 ocp_manifests]$ docker  images  | grep ashu
+dockerashu/ashutcs             webappv1   dcaa1198974f   7 days ago      538MB
+ashuwebapp                     appv1      dcaa1198974f   7 days ago      538MB
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ docker  tag   ashuwebapp:appv1  tcsindia.azurecr.io/ashuapp:version1 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ docker login  tcsindia.azurecr.io
+Username: tcsindia
+Password: 
+WARNING! Your password will be stored unencrypted in /home/ashu/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[ashu@ip-172-31-16-156 ocp_manifests]$ docker  push tcsindia.azurecr.io/ashuapp:version1
+The push refers to repository [tcsindia.azurecr.io/ashuapp]
+6a79e9661aac: Pushed 
+6bdd092574bb: Pushing [==============================>                    ]  185.2MB/304.3MB
+e78cf5418e0f: Pushing [==================>                                ]  85.02MB/230.2MB
+
+
+```
+
+### if we deploy private image to openshift will get below error
+
+```
+ashu@ip-172-31-16-156 ocp_manifests]$ oc  get pods
+NAME                       READY   STATUS             RESTARTS   AGE
+ashuapp-84d89b4df5-54gkr   0/1     ImagePullBackOff   0          10m
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+
+
+Note: you can check oc describe pod  or check pod events section in webconsole 
+```
+
+### to store confidentail info we can use secrets in ocp 
+
+<img src="secret1.png">
+
+### creating secret yaml to store registry secret 
+
+```
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  create secret 
+Create a secret with specified type.
+
+ A docker-registry type secret is for accessing a container registry.
+
+ A generic type secret indicate an Opaque secret type.
+
+ A tls type secret holds TLS certificate and its associated key.
+
+Available Commands:
+  docker-registry   Create a secret for use with a Docker registry
+  generic           Create a secret from a local file, directory, or literal value
+  tls               Create a TLS secret
+
+Usage:
+  oc create secret (docker-registry | generic | tls) [options]
+
+Use "oc create secret <command> --help" for more information about a given command.
+Use "oc options" for a list of global command-line options (applies to all commands).
+
+
+===>
+oc create secret docker-registry  ashu-reg-cred --docker-server tcsindia.azurecr.io --docker-username tcsindia  --docker-password="g" --dry-run=client -o yaml  >regsecret.yaml 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc create -f regsecret.yaml 
+secret/ashu-reg-cred created
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc get secrets 
+NAME                       TYPE                             DATA   AGE
+ashu-reg-cred              kubernetes.io/dockerconfigjson   1      4s
+builder-dockercfg-qc9f7    kubernetes.io/dockercfg          1      3d
+default-dockercfg-qffpp    kubernetes.io/dockercfg          1      3d
+deployer-dockercfg-gl6nx   kubernetes.io/dockercfg          1      3d
+
+```
+
+### using secrets 
+
+```
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  create -f private.yaml 
+deployment.apps/ashuapp created
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get deploy
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashuapp   1/1     1            1           11s
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get pods
+NAME                      READY   STATUS    RESTARTS   AGE
+ashuapp-fbcd8f4bb-r5wz9   1/1     Running   0          15s
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+
+```
+
+
