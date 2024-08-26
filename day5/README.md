@@ -160,3 +160,24 @@ router-internal-default   ClusterIP      172.30.146.218   <none>                
 
 <img src="route2.png">
 
+
+### ocp setup -- On_prim vs On cloud 
+
+<img src="onprim.png">
+
+
+### creating routes 
+
+```
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get svc 
+NAME      TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+ashulb6   ClusterIP   172.30.3.32   <none>        80/TCP    92m
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc expose service ashulb6 
+
+
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get  routes
+NAME      HOST/PORT                                                 PATH   SERVICES   PORT   TERMINATION   WILDCARD
+ashulb6   ashulb6-ashu-app-project.apps.tcs-cluster.ashutoshh.xyz          ashulb6    80                   None
+
+```
