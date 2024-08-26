@@ -62,3 +62,49 @@ ashuday6app-f6ccbc8c4-mtr6l   1/1     Running   0          9s
 
 
 ```
+
+### doing a manual scaling 
+
+```
+ oc  scale deployment  ashuday6app  --replicas 2 
+deployment.apps/ashuday6app scaled
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get  deploy 
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+ashuday6app   2/2     2            2           4m35s
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get  pods
+NAME                          READY   STATUS    RESTARTS   AGE
+ashuday6app-f6ccbc8c4-gb5mq   1/1     Running   0          6s
+ashuday6app-f6ccbc8c4-mtr6l   1/1     Running   0          4m37s
+
+```
+
+### creating clusterIP type service by exposing deployment 
+
+```
+oc  get deploy 
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+ashuday6app   2/2     2            2           6m16s
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc expose deployment  ashuday6app   --type ClusterIP --port 80 --name ashulb6 --dry-run=client -o yaml >day6svc.yml
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc get svc 
+No resources found in ashu-app-project namespace.
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc get service 
+No resources found in ashu-app-project namespace.
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc create -f day6svc.yml 
+service/ashulb6 created
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc get  svc
+NAME      TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+ashulb6   ClusterIP   172.30.3.32   <none>        80/TCP    3s
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc get  ep 
+NAME      ENDPOINTS                       AGE
+ashulb6   10.130.2.43:80,10.131.0.16:80   16s
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get po -o wide
+NAME                          READY   STATUS    RESTARTS   AGE     IP            NODE                          NOMINATED NODE   READINESS GATES
+ashuday6app-f6ccbc8c4-gb5mq   1/1     Running   0          3m      10.130.2.43   ip-10-0-90-155.ec2.internal   <none>           <none>
+ashuday6app-f6ccbc8c4-mtr6l   1/1     Running   0          7m31s   10.131.0.16   ip-10-0-95-84.ec2.internal    <none>           <none>
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+
+
+
+```
