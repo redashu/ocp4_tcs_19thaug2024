@@ -108,3 +108,47 @@ ashuday6app-f6ccbc8c4-mtr6l   1/1     Running   0          7m31s   10.131.0.16  
 
 
 ```
+
+### Understanding how end users are going to reach to app running in pods 
+
+<img src="net1.png">
+
+### Ingress controller to filter network traffic and forward connection to service of project
+
+<img src="project1.png">
+
+### Ingress controller in visual 
+
+<img src="ingress.png">
+
+### ocp setup + ingress + external LB 
+
+<img src="setup.png">
+
+### verify ingress controller in OCP 
+
+```
+oc  get projects  | grep ingress
+openshift-ingress                                                 Active
+openshift-ingress-canary                                          Active
+openshift-ingress-operator                                        Active
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get  deploy  -n  openshift-ingress
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+router-default   2/2     2            2           4d6h
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get  pod  -n  openshift-ingress
+NAME                              READY   STATUS    RESTARTS        AGE
+router-default-77fdf7dd84-g97xh   1/1     Running   4               4d6h
+router-default-77fdf7dd84-r6bq8   1/1     Running   5 (4h55m ago)   4d6h
+[ashu@ip-172-31-16-156 ocp_manifests]$ 
+[ashu@ip-172-31-16-156 ocp_manifests]$ oc  get svc  -n  openshift-ingress
+NAME                      TYPE           CLUSTER-IP       EXTERNAL-IP                                                               PORT(S)                      AGE
+router-default            LoadBalancer   172.30.37.144    a7f5853abac8446e0a4e3f884856458a-1366741115.us-east-1.elb.amazonaws.com   80:32674/TCP,443:31734/TCP   4d6h
+router-internal-default   ClusterIP      172.30.146.218   <none>                                                                    80/TCP,443/TCP,1936/TCP      4d6h
+
+```
+
