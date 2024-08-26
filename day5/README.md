@@ -152,3 +152,11 @@ router-internal-default   ClusterIP      172.30.146.218   <none>                
 
 ```
 
+### Internal DNS you have to entry for route domain 
+
+<img src="route1.png">
+
+### openshift on prim responsibility 
+
+<img src="route2.png">
+
