@@ -289,8 +289,98 @@ NAME    HOST/PORT                                            PATH   SERVICES   P
 weblb   weblb-ashu-personal.apps.tcs-cluster.ashutoshh.xyz          weblb      8080                 None
 ```
 
+## storing password like info in secret 
+
+<img src="secret1.png">
 
 
+### creating secrets 
+
+```
+oc create secret 
+Create a secret with specified type.
+
+ A docker-registry type secret is for accessing a container registry.
+
+ A generic type secret indicate an Opaque secret type.
+
+ A tls type secret holds TLS certificate and its associated key.
+
+Available Commands:
+  docker-registry   Create a secret for use with a Docker registry
+  generic           Create a secret from a local file, directory, or literal value
+  tls               Create a TLS secret
+
+Usage:
+  oc create secret (docker-registry | generic | tls) [options]
+
+Use "oc create secret <command> --help" for more information about a given command.
+Use "oc options" for a list of global command-line options (applies to all commands).
+
+
+[ashu@ip-172-31-16-156 tasks]$ oc create secret  generic ashu-db-creds --from-literal  db_password=AshudbOcp@098 --dry-run=client -o yaml >rootsecret.yml
+
+[ashu@ip-172-31-16-156 tasks]$ ls
+db_deloy.yaml  rootsecret.yml  webdeploy.yaml  websvc.yml
+[ashu@ip-172-31-16-156 tasks]$ cat  rootsecret.yml 
+apiVersion: v1
+data:
+  db_password: QXNodWRiT2NwQDA5OA==
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: ashu-db-creds
+
+
+[ashu@ip-172-31-16-156 tasks]$ oc  create -f rootsecret.yml 
+secret/ashu-db-creds created
+[ashu@ip-172-31-16-156 tasks]$ oc  get  secrets 
+NAME                       TYPE                      DATA   AGE
+ashu-db-creds              Opaque                    1      4s
+builder-dockercfg-jz8lx    kubernetes.io/dockercfg   1      43m
+
+```
+
+
+### using secret in deployment yaml 
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashudb
+  name: ashudb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashudb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashudb
+    spec:
+      containers:
+      - image: mysql
+        name: mysql
+        ports:
+        - containerPort: 3306
+        env: # to declare env of container images
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom: # reading value from external 
+            secretKeyRef: # calling secret 
+              name: ashu-db-creds # name of secret 
+              key: db_password # key of secret 
+        - name: MYSQL_DATABASE
+          value: ashudb 
+        resources: {}
+status: {}
+
+```
 
 
 
