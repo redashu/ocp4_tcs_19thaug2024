@@ -181,4 +181,56 @@ You don't have any projects. You can try to create a new project, by running
 
 ```
 
+### new user we have created is not having any permission at all 
+
+```
+ashu@ip-172-31-16-156 users_manifest]$ oc  whoami 
+test1
+[ashu@ip-172-31-16-156 users_manifest]$ 
+[ashu@ip-172-31-16-156 users_manifest]$ oc  get  pods
+Error from server (Forbidden): pods is forbidden: User "test1" cannot list resource "pods" in API group "" in the namespace "default"
+[ashu@ip-172-31-16-156 users_manifest]$ 
+[ashu@ip-172-31-16-156 users_manifest]$ 
+[ashu@ip-172-31-16-156 users_manifest]$ oc  get  nodes
+Error from server (Forbidden): nodes is forbidden: User "test1" cannot list resource "nodes" in API group "" at the cluster scope
+[ashu@ip-172-31-16-156 users_manifest]$ 
+[ashu@ip-172-31-16-156 users_manifest]$ oc  version 
+Client Version: 4.16.6
+Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
+Kubernetes Version: v1.29.6+aba1e8d
+[ashu@ip-172-31-16-156 users_manifest]$ oc  cluster-info 
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+Error from server (Forbidden): services is forbidden: User "test1" cannot list resource "services" in API group "" in the namespace "kube-system"
+[ashu@ip-172-31-16-156 users_manifest]$ 
+
+
+```
+
+### user process understanding 
+
+<img src="userp.png">
+
+### creating multiple users for you all 
+
+```
+for  i  in  aakash1  asif1 jeetandraY1 jitendra1 mandar1 noor1 ranjit1 sachinD1 sachinG1 vivek1 
+> do
+> htpasswd   -bB  creds  $i Ocp@12345
+> done
+Adding password for user aakash1
+Adding password for user asif1
+Adding password for user jeetandraY1
+Adding password for user jitendra1
+Adding password for user mandar1
+Adding password for user noor1
+Adding password for user ranjit1
+Adding password for user sachinD1
+Adding password for user sachinG1
+Adding password for user vivek1
+[ashu@ip-172-31-16-156 users_manifest]$ cat  creds 
+ashu:$2y$05$BVa7jVUHi9x.YwbcNXKYBOqAZK0nOm7E85U2JTys7Vnusm7k7zx36
+
+```
+
 
