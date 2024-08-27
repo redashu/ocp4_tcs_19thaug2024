@@ -13,3 +13,17 @@
   
 
 ```
+
+### task 2 
+
+```
+  1. Create a yaml file named  <yourname>splunk.yaml
+  
+  3. use splunk/splunk:latest image from docker hub  to create deployment   
+  5. Required password must be stored in Secret 
+  6. replica count 1 
+  7. create service of ClusterIP  type named <yourname>svc  and routes as well 
+  8. access this from web browser 
+  9. Note : default username of splunk is admin and splunk default port number is 8000 
+  
+```
