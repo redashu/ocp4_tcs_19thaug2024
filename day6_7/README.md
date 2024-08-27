@@ -464,3 +464,8 @@ weblb     10.130.2.35:8080   29m
 
 ```
 
+### flow diagram of 2 tier webapp
+
+<img src="fl2.png">
+
+
