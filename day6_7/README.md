@@ -233,4 +233,64 @@ ashu:$2y$05$BVa7jVUHi9x.YwbcNXKYBOqAZK0nOm7E85U2JTys7Vnusm7k7zx36
 
 ```
 
+### new user can create project 
+
+```
+ oc  new-project   ashu-personal 
+Now using project "ashu-personal" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.43 -- /agnhost serve-hostname
+
+[ashu@ip-172-31-16-156 users_manifest]$ oc project
+Using project "ashu-personal" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+[ashu@ip-172-31-16-156 users_manifest]$ 
+
+
+```
+
+## Deploying adminer docker image and try to access it 
+
+```
+oc create deployment  ashu-ui --image=adminer --port 8080 --dry-run=client -o yaml >webdeploy.yaml 
+[ashu@ip-172-31-16-156 tasks]$ oc create -f webdeploy.yaml 
+deployment.apps/ashu-ui created
+[ashu@ip-172-31-16-156 tasks]$ oc  get deploy 
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-ui   0/1     1            0           4s
+[ashu@ip-172-31-16-156 tasks]$ oc  get  pods
+NAME                       READY   STATUS    RESTARTS   AGE
+ashu-ui-745c8cc5c8-rqg47   1/1     Running   0          10s
+[ashu@ip-172-31-16-156 tasks]$ oc  get  pods
+NAME                       READY   STATUS    RESTARTS   AGE
+ashu-ui-745c8cc5c8-rqg47   1/1     Running   0          19s
+[ashu@ip-172-31-16-156 tasks]$ oc  expose deployment  ashu-ui  --type ClusterIP --port 8080 --name weblb --dry-run=client -o yaml >websvc.yml 
+[ashu@ip-172-31-16-156 tasks]$ oc create -f websvc.yml 
+service/weblb created
+[ashu@ip-172-31-16-156 tasks]$ oc get svc
+NAME    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+weblb   ClusterIP   172.30.134.43   <none>        8080/TCP   2s
+[ashu@ip-172-31-16-156 tasks]$ oc get ep 
+NAME    ENDPOINTS          AGE
+weblb   10.130.2.35:8080   5s
+[ashu@ip-172-31-16-156 tasks]$ oc expose service weblb 
+route/weblb exposed
+[ashu@ip-172-31-16-156 tasks]$ oc get  routes.route.openshift.io 
+NAME    HOST/PORT                                            PATH   SERVICES   PORT   TERMINATION   WILDCARD
+weblb   weblb-ashu-personal.apps.tcs-cluster.ashutoshh.xyz          weblb      8080                 None
+[ashu@ip-172-31-16-156 tasks]$ 
+[ashu@ip-172-31-16-156 tasks]$ oc get routes
+NAME    HOST/PORT                                            PATH   SERVICES   PORT   TERMINATION   WILDCARD
+weblb   weblb-ashu-personal.apps.tcs-cluster.ashutoshh.xyz          weblb      8080                 None
+```
+
+
+
+
+
 
