@@ -382,5 +382,85 @@ status: {}
 
 ```
 
+### creating db deployment yaml and also creating service
 
+```
+ashu@ip-172-31-16-156 tasks]$ ls
+db_deloy.yaml  rootsecret.yml  webdeploy.yaml  websvc.yml
+[ashu@ip-172-31-16-156 tasks]$ oc create -f db_deloy.yaml 
+deployment.apps/ashudb created
+[ashu@ip-172-31-16-156 tasks]$ 
+[ashu@ip-172-31-16-156 tasks]$ oc  get  deploy 
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-ui   1/1     1            1           29m
+ashudb    0/1     1            0           5s
+[ashu@ip-172-31-16-156 tasks]$ oc  get  pods
+NAME                       READY   STATUS              RESTARTS   AGE
+ashu-ui-745c8cc5c8-rqg47   1/1     Running             0          29m
+ashudb-587c998967-f8qh9    0/1     ContainerCreating   0          13s
+[ashu@ip-172-31-16-156 tasks]$ oc  get  pods
+NAME                       READY   STATUS    RESTARTS   AGE
+ashu-ui-745c8cc5c8-rqg47   1/1     Running   0          29m
+ashudb-587c998967-f8qh9    1/1     Running   0          21s
+[ashu@ip-172-31-16-156 tasks]$ oc  expose  deployment  ashudb  --type ClusterIP --port 3306 --name ashdblb --dry-run=client -o yaml >dbsvc.yml 
+[ashu@ip-172-31-16-156 tasks]$ oc create -f dbsvc.yml 
+service/ashdblb created
+[ashu@ip-172-31-16-156 tasks]$ oc  get svc
+NAME      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+ashdblb   ClusterIP   172.30.116.106   <none>        3306/TCP   3s
+weblb     ClusterIP   172.30.134.43    <none>        8080/TCP   29m
+[ashu@ip-172-31-16-156 tasks]$ oc  get ep 
+NAME      ENDPOINTS          AGE
+ashdblb   10.130.2.37:3306   5s
+weblb     10.130.2.35:8080   29m
+[ashu@ip-172-31-16-156 tasks]$ 
+
+```
+
+### history of adminer + mysql deployment 
+
+```
+725  cd  tasks/
+  726  ls
+  727  oc create deployment  ashu-ui --image=adminer --port 8080 --dry-run=client -o yaml >webdeploy.yaml 
+  728  oc create -f webdeploy.yaml 
+  729  oc  get deploy 
+  730  oc  get  pods
+  731  oc  expose deployment  ashu-ui  --type ClusterIP --port 8080 --name weblb --dry-run=client -o yaml >websvc.yml 
+  732  oc create -f websvc.yml 
+  733  oc get svc
+  734  oc get ep 
+  735  oc expose service weblb 
+  736  oc get  routes.route.openshift.io 
+  737  oc get routes
+  738  oc  exec -it ashu-ui-745c8cc5c8-rqg47  -- bash 
+  739  history 
+  740  ls
+  741  oc  create  deployment  ashudb --image=mysql --port 3306  --dry-run=client -o yaml >db_deloy.yaml 
+  742  ls
+  743  vim   db_deloy.yaml 
+  744  oc create secret 
+  745  oc create secret  generic ashu-db-creds --from-literal  db_password=AshudbOcp@098 --dry-run=client -o yaml >rootsecret.yml
+  746  ls
+  747  cat  rootsecret.yml 
+  748  oc  create -f rootsecret.yml 
+  749  oc  get  secrets 
+  750  history 
+  751  vim  db_deloy.yaml 
+  752  cat  db_deloy.yaml 
+  753  history 
+  754  ls
+  755  cd ocp_manifests/
+  756  ls
+  757  cd users_manifest/
+  758  ls
+  759  cd tasks/
+  760  ls
+  761  oc create -f db_deloy.yaml 
+  762  oc  get  deploy 
+  763  oc  get  pods
+  764  oc  expose  deployment  ashudb  --type ClusterIP --port 3306 --name ashdblb --dry-run=client -o yaml >dbsvc.yml 
+  765  oc create -f dbsvc.yml 
+
+```
 
