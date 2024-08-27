@@ -136,3 +136,49 @@ deployer-dockercfg-ftptf                  kubernetes.io/dockercfg          1    
 
 ```
 
+### integration of apiServer with method / user providers 
+
+<img src="auth1.png">
+
+
+### create yaml file and do apply 
+
+```
+[ashu@ip-172-31-16-156 users_manifest]$ cat  oauth.yaml 
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+  - name: my_htpasswd_provider 
+    mappingMethod: claim 
+    type: HTPasswd
+    htpasswd:
+      fileData:
+        name: ashu-cred-details # name of create 
+```
+
+### apply it 
+
+```
+oc apply  -f oauth.yaml
+```
+
+### now we can login with the users we created 
+
+```
+
+oc  login  https://api.tcs-cluster.ashutoshh.xyz:6443  -u test1  -p Ocp@12345  --insecure-skip-tls-verify
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Login successful.
+
+You don't have any projects. You can try to create a new project, by running
+
+    oc new-project <projectname>
+
+
+```
+
+
