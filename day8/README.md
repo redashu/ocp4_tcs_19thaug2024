@@ -201,3 +201,30 @@ You have one project on this server: ashu-personal
 
 ```
 
+### creating role under ashu-poc-web project 
+
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: pod-access
+  namespace: ashu-poc-web
+rules:
+- apiGroups: [""]
+  resources: ["pods","services"]
+  verbs: ["*"]
+
+```
+
+### creating it 
+
+```
+ oc  create -f role1.yaml 
+role.rbac.authorization.k8s.io/pod-access created
+[ashu@ip-172-31-16-156 rbac]$ oc  get roles -n ashu-poc-web 
+NAME         CREATED AT
+pod-access   2024-08-28T11:18:31Z
+
+```
+
