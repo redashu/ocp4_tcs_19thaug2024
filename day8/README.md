@@ -112,3 +112,40 @@ NAME      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 ashdblb   ClusterIP   172.30.62.232   <none>        3306/TCP   19s
 
 ```
+
+### checking from pod1 to pod2 
+
+```
+ashu@ip-172-31-16-156 ~]$ oc get deploy 
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+ashudb   1/1     1            1           27m
+[ashu@ip-172-31-16-156 ~]$ oc  run  webclient --image=alpine  --command sleep 100000 
+pod/webclient created
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods
+NAME                      READY   STATUS    RESTARTS   AGE
+ashudb-587c998967-8msjs   1/1     Running   0          27m
+webclient                 1/1     Running   0          4s
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ oc get project  | grep -i ashu
+ashu-db-space                  Active
+ashu-personal                  Active
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods -o wide  -n  ashu-personal 
+NAME                       READY   STATUS    RESTARTS   AGE   IP            NODE                          NOMINATED NODE   READINESS GATES
+ashu-ui-745c8cc5c8-h9jnp   1/1     Running   0          34m   10.130.2.19   ip-10-0-90-155.ec2.internal   <none>           <none>
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ oc  get pods
+NAME                      READY   STATUS    RESTARTS   AGE
+ashudb-587c998967-8msjs   1/1     Running   0          30m
+webclient                 1/1     Running   0          2m25s
+[ashu@ip-172-31-16-156 ~]$ oc  exec -it webclient -- sh 
+~ $ 
+~ $ ping  10.130.2.19
+PING 10.130.2.19 (10.130.2.19): 56 data bytes
+64 bytes from 10.130.2.19: seq=0 ttl=42 time=1.755 ms
+64 bytes from 10.130.2.19: seq=1 ttl=42 time=0.801 ms
+^C
+--- 10.130.2.19 ping statistics ---
+
+```
+
