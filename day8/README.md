@@ -72,3 +72,43 @@ weblb   weblb-ashu-personal.apps.tcs-cluster.ashutoshh.xyz          weblb      8
 [ashu@ip-172-31-16-156 tasks]$ 
 
 ```
+
+### creating a new-project and there deployment of db 
+
+```
+[ashu@ip-172-31-16-156 tasks]$ oc  new-project  ashu-db-space 
+Now using project "ashu-db-space" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.43 -- /agnhost serve-hostname
+
+[ashu@ip-172-31-16-156 tasks]$ oc  project
+Using project "ashu-db-space" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+[ashu@ip-172-31-16-156 tasks]$ ls
+db_deloy.yaml  dbsvc.yml  rootsecret.yml  webdeploy.yaml  websvc.yml
+[ashu@ip-172-31-16-156 tasks]$ oc  create  -f rootsecret.yml -f db_deloy.yaml  -f dbsvc.yml 
+secret/ashu-db-creds created
+deployment.apps/ashudb created
+service/ashdblb created
+[ashu@ip-172-31-16-156 tasks]$ oc  get  secret
+NAME                       TYPE                      DATA   AGE
+ashu-db-creds              Opaque                    1      6s
+builder-dockercfg-psg2d    kubernetes.io/dockercfg   1      51s
+default-dockercfg-kgdc7    kubernetes.io/dockercfg   1      51s
+deployer-dockercfg-gp225   kubernetes.io/dockercfg   1      51s
+[ashu@ip-172-31-16-156 tasks]$ oc  get  deploy
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+ashudb   1/1     1            1           10s
+[ashu@ip-172-31-16-156 tasks]$ oc  get  po
+NAME                      READY   STATUS    RESTARTS   AGE
+ashudb-587c998967-8msjs   1/1     Running   0          14s
+[ashu@ip-172-31-16-156 tasks]$ oc  get  svc
+NAME      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+ashdblb   ClusterIP   172.30.62.232   <none>        3306/TCP   19s
+
+```
