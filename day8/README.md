@@ -182,3 +182,22 @@ to build a new example application in Ruby. Or use kubectl to deploy a simple Ku
 
 
 ```
+
+### login with personal user and try to access above project 
+
+```
+ oc  login  https://api.tcs-cluster.ashutoshh.xyz:6443  -u test1  -p Ocp@12345  --insecure-skip-tls-verify
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Login successful.
+
+You have one project on this server: "ashu-personal"
+
+Using project "ashu-personal".
+[ashu@ip-172-31-16-156 users_manifest]$ oc project ashu-poc-web
+error: You are not a member of project "ashu-poc-web".
+You have one project on this server: ashu-personal
+[ashu@ip-172-31-16-156 users_manifest]$ 
+
+```
+
