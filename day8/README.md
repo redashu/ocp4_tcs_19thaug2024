@@ -1,1 +1,46 @@
-# ocp4_tcs_19thaug2024
+
+### checking lab details 
+
+```
+
+[ashu@ip-172-31-16-156 ~]$ oc whoami
+test1
+[ashu@ip-172-31-16-156 ~]$ oc  project
+Using project "ashu-personal" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+[ashu@ip-172-31-16-156 ~]$ oc  get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+NAME                           READY   STATUS    RESTARTS   AGE
+pod/ashu-ui-745c8cc5c8-rqg47   1/1     Running   1          21h
+pod/ashudb-587c998967-f8qh9    1/1     Running   1          20h
+
+NAME              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/ashdblb   ClusterIP   172.30.116.106   <none>        3306/TCP   20h
+service/weblb     ClusterIP   172.30.134.43    <none>        8080/TCP   21h
+
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/ashu-ui   1/1     1            1           21h
+deployment.apps/ashudb    1/1     1            1           20h
+
+NAME                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/ashu-ui-745c8cc5c8   1         1         1       21h
+replicaset.apps/ashudb-587c998967    1         1         1       20h
+
+NAME                             HOST/PORT                                            PATH   SERVICES   PORT   TERMINATION   WILDCARD
+route.route.openshift.io/weblb   weblb-ashu-personal.apps.tcs-cluster.ashutoshh.xyz          weblb      8080                 None
+[ashu@ip-172-31-16-156 ~]$ oc  delete all --all
+pod "ashu-ui-745c8cc5c8-rqg47" deleted
+pod "ashudb-587c998967-f8qh9" deleted
+service "ashdblb" deleted
+service "weblb" deleted
+deployment.apps "ashu-ui" deleted
+deployment.apps "ashudb" deleted
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+route.route.openshift.io "weblb" deleted
+
+```
+
+### CoreDNS understanding 
+
+<img src="coredns1.png">
+
+
