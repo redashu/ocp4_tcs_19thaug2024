@@ -386,6 +386,14 @@ error: failed to create deployment: deployments.apps is forbidden: User "test1" 
 
 ```
 
+### Roles 
+
+<img src="roles11.png">
+
+### clusterRole and clusterRole bindings 
+
+<img src="clsr.png">
+
 
 
 
