@@ -250,3 +250,34 @@ PolicyRule:
 
 ```
 
+### creating rolebinding which will be bounded to user 
+
+```
+ oc  create rolebinding  ashurolebind1 --role pod-access  --user=test1  --dry-run=client -o yaml 
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  creationTimestamp: null
+  name: ashurolebind1
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pod-access
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: test1
+[ashu@ip-172-31-16-156 rbac]$ oc  create rolebinding  ashurolebind1 --role pod-access  --user=test1  --dry-run=client -o yaml  >rolebind1.yaml 
+[ashu@ip-172-31-16-156 rbac]$ oc create -f rolebind1.yaml 
+rolebinding.rbac.authorization.k8s.io/ashurolebind1 created
+[ashu@ip-172-31-16-156 rbac]$ oc get rolebinding
+NAME                    ROLE                               AGE
+admin                   ClusterRole/admin                  62m
+ashurolebind1           Role/pod-access                    8s
+system:deployers        ClusterRole/system:deployer        62m
+system:image-builders   ClusterRole/system:image-builder   62m
+system:image-pullers    ClusterRole/system:image-puller    62m
+
+```
+
+
