@@ -228,3 +228,25 @@ pod-access   2024-08-28T11:18:31Z
 
 ```
 
+
+### verify details 
+
+```
+ oc  project  ashu-poc-web 
+Now using project "ashu-poc-web" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+[ashu@ip-172-31-16-156 rbac]$ 
+[ashu@ip-172-31-16-156 rbac]$ oc  get roles 
+NAME         CREATED AT
+pod-access   2024-08-28T11:18:31Z
+[ashu@ip-172-31-16-156 rbac]$ oc describe roles pod-access 
+Name:         pod-access
+Labels:       <none>
+Annotations:  <none>
+PolicyRule:
+  Resources  Non-Resource URLs  Resource Names  Verbs
+  ---------  -----------------  --------------  -----
+  pods       []                 []              [*]
+  services   []                 []              [*]
+
+```
+
