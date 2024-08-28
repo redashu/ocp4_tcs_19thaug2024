@@ -153,3 +153,32 @@ PING 10.130.2.19 (10.130.2.19): 56 data bytes
 
 <img src="svcn1.png">
 
+## RBAC in ocp 
+
+### roles and role bindings
+
+<img src="role1.png">
+
+
+### creating a project using admin user 
+
+```
+[ashu@ip-172-31-16-156 ~]$ oc whoami 
+kube:admin
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ oc  new-project   ashu-poc-web
+Now using project "ashu-poc-web" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.43 -- /agnhost serve-hostname
+
+[ashu@ip-172-31-16-156 ~]$ 
+
+
+
+```
