@@ -280,4 +280,9 @@ system:image-pullers    ClusterRole/system:image-puller    62m
 
 ```
 
+### final step by step guide 
+
+<img src=""step1.png">
+
+
 
