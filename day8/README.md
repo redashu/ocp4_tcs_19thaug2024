@@ -149,3 +149,7 @@ PING 10.130.2.19 (10.130.2.19): 56 data bytes
 
 ```
 
+### overall cross project networking in openshfit service
+
+<img src="svcn1.png">
+
