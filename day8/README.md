@@ -312,6 +312,81 @@ Error from server (Forbidden): routes.route.openshift.io is forbidden: User "tes
 
 ```
 
+### in OCP type of roles 
+
+<img src="rtype.png">
+
+### pre define role in ocp 
+
+[click_here](https://docs.openshift.com/container-platform/4.8/authentication/using-rbac.html)
+
+### creating a new project for testing 
+
+```
+oc whoami
+test1
+[ashu@ip-172-31-16-156 ~]$ oc logout 
+Logged "test1" out on "https://api.tcs-cluster.ashutoshh.xyz:6443"
+[ashu@ip-172-31-16-156 ~]$ oc login   https://api.tcs-cluster.ashutoshh.xyz:6443  -u kubeadmin -p pkSo3-puJpN-uNugw-XBPjC  --insecure-skip-tls-verify
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Login successful.
+
+You have access to 91 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project "ashu-personal".
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ oc delete project  ashu-poc-web 
+project.project.openshift.io "ashu-poc-web" deleted
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ oc  new-project    ashu-poc-web` 
+> ^C
+[ashu@ip-172-31-16-156 ~]$ oc  new-project    ashu-poc-web1
+Now using project "ashu-poc-web1" on server "https://api.tcs-cluster.ashutoshh.xyz:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.43 -- /agnhost serve-hostname
+
+[ashu@ip-172-31-16-156 ~]$ 
+
+```
+
+### using oc policy command to bind predefine roles to user 
+
+```
+oc  whoami
+kube:admin
+[ashu@ip-172-31-16-156 ~]$ oc  policy add-role-to-user  view     test1 
+clusterrole.rbac.authorization.k8s.io/view added: "test1"
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ 
+[ashu@ip-172-31-16-156 ~]$ oc  login  https://api.tcs-cluster.ashutoshh.xyz:6443  -u test1  -p Ocp@12345  --insecure-skip-tls-verify
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Login successful.
+
+You have access to the following projects and can switch between them with 'oc project <projectname>':
+
+    ashu-personal
+  * ashu-poc-web1
+
+Using project "ashu-poc-web1".
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods 
+No resources found in ashu-poc-web1 namespace.
+[ashu@ip-172-31-16-156 ~]$ oc  get  pods -n ashu-poc-web1
+No resources found in ashu-poc-web1 namespace.
+[ashu@ip-172-31-16-156 ~]$ oc  create  deployment d1 --image=nginx 
+error: failed to create deployment: deployments.apps is forbidden: User "test1" cannot create resource "deployments" in API group "apps" in the namespace "ashu-poc-web1"
+[ashu@ip-172-31-16-156 ~]$ 
+
+```
+
+
 
 
 
