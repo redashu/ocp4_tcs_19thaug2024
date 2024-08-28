@@ -43,4 +43,32 @@ route.route.openshift.io "weblb" deleted
 
 <img src="coredns1.png">
 
+### task updates 
 
+### creating webapp in ashu-personal namespace 
+
+```
+[ashu@ip-172-31-16-156 tasks]$ oc  create  -f  webdeploy.yaml   -f websvc.yml 
+deployment.apps/ashu-ui created
+service/weblb created
+
+[ashu@ip-172-31-16-156 tasks]$ oc  get  deploy
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-ui   1/1     1            1           4s
+
+[ashu@ip-172-31-16-156 tasks]$ oc  get  svc
+NAME    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+weblb   ClusterIP   172.30.88.151   <none>        8080/TCP   8s
+
+[ashu@ip-172-31-16-156 tasks]$ oc  get  ep
+NAME    ENDPOINTS          AGE
+weblb   10.130.2.19:8080   11s
+
+[ashu@ip-172-31-16-156 tasks]$ oc  expose service weblb 
+route/weblb exposed
+[ashu@ip-172-31-16-156 tasks]$ oc  get  routes
+NAME    HOST/PORT                                            PATH   SERVICES   PORT   TERMINATION   WILDCARD
+weblb   weblb-ashu-personal.apps.tcs-cluster.ashutoshh.xyz          weblb      8080                 None
+[ashu@ip-172-31-16-156 tasks]$ 
+
+```
