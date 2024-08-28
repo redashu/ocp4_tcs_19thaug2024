@@ -284,5 +284,34 @@ system:image-pullers    ClusterRole/system:image-puller    62m
 
 <img src=""step1.png">
 
+## verify 
+
+```
+oc  login  https://api.tcs-cluster.ashutoshh.xyz:6443  -u test1  -p Ocp@12345  --insecure-skip-tls-verify
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Login successful.
+
+You have one project on this server: "ashu-personal"
+
+Using project "ashu-personal".
+[ashu@ip-172-31-16-156 rbac]$ 
+[ashu@ip-172-31-16-156 rbac]$ 
+[ashu@ip-172-31-16-156 rbac]$ oc  whoami
+test1
+[ashu@ip-172-31-16-156 rbac]$ oc  get pods -n  ashu-poc-web 
+No resources found in ashu-poc-web namespace.
+[ashu@ip-172-31-16-156 rbac]$ 
+[ashu@ip-172-31-16-156 rbac]$ oc  get service  -n  ashu-poc-web 
+No resources found in ashu-poc-web namespace.
+[ashu@ip-172-31-16-156 rbac]$ oc  get deploy  -n  ashu-poc-web 
+Error from server (Forbidden): deployments.apps is forbidden: User "test1" cannot list resource "deployments" in API group "apps" in the namespace "ashu-poc-web"
+[ashu@ip-172-31-16-156 rbac]$ 
+[ashu@ip-172-31-16-156 rbac]$ oc  get routes  -n  ashu-poc-web 
+Error from server (Forbidden): routes.route.openshift.io is forbidden: User "test1" cannot list resource "routes" in API group "route.openshift.io" in the namespace "ashu-poc-web"
+
+```
+
+
 
 
