@@ -83,4 +83,42 @@ https://console-openshift-console.apps.tcs-cluster.ashutoshh.xyz
 
 ```
 
+### checking clusterRole 
 
+```
+oc get  clusterrole 
+NAME                                                                               CREATED AT
+admin                                                                              2024-08-22T04:10:31Z
+aggregate-olm-edit                                                                 2024-08-22T04:12:23Z
+aggregate-olm-view                                                                 2024-08-22T04:12:24Z
+alert-routing-edit                                                                 2024-08-22T04:33:51Z
+alertmanager-main                                                                  2024-08-22T04:33:51Z
+
+=====> view clusterrole 
+oc get  clusterrole  | grep view
+aggregate-olm-view                                                                 2024-08-22T04:12:24Z
+cluster-monitoring-view                                                            2024-08-22T04:33:52Z
+helm-chartrepos-viewer                                                             2024-08-22T04:24:37Z
+monitoring-rules-view                                                              2024-08-22T04:33:49Z
+olm.og.global-operators.view-blsDheftOYMzHYeJbysGRVymD2Yx8MmrS7Yi0E                2024-08-22T04:18:12Z
+olm.og.olm-operators.view-8emcFsHayyHMQwkcnb9OTLvkbp0RUOKtlNrGsV                   2024-08-22T04:18:12Z
+olm.og.openshift-cluster-monitoring.view-9QCGFNcofBHQ2DeWEf2qFa4NWqTOGskUedO4Tz    2024-08-22T04:18:12Z
+packagemanifests-v1-view                                                           2024-08-22T04:22:52Z
+registry-viewer                                                                    2024-08-22T04:19:17Z
+self-access-reviewer                                                               2024-08-22T04:19:16Z
+system:aggregate-to-view                                                           2024-08-22T04:10:31Z
+system:openshift:aggregate-snapshots-to-view                                       2024-08-22T04:12:13Z
+system:openshift:aggregate-to-view                                                 2024-08-22T04:19:16Z
+system:openshift:public-info-viewer                                                2024-08-22T04:10:31Z
+system:openshift:tokenreview-openshift-controller-manager                          2024-08-22T04:16:46Z
+system:openshift:tokenreview-openshift-route-controller-manager                    2024-08-22T04:16:47Z
+system:public-info-viewer                                                          2024-08-22T04:10:31Z
+view                                                                               2024-08-22T04:10:31Z
+
+===>> exploring view clusterrole 
+
+oc  adm policy add-cluster-role-to-user view test1 
+clusterrole.rbac.authorization.k8s.io/view added: "test1"
+[ashu@ip-172-31-16-156 ~]$ 
+
+```
