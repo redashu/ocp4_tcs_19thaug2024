@@ -160,3 +160,31 @@ root
 [ashu@ip-172-31-16-156 ~]$ 
 
 ```
+
+# OCP Installation Understanding 
+
+### understanding first page 
+
+<img src="install1.png">
+
+### openshift varients 
+
+<img src="install2.png">
+
+### CRC (code ready containers) -- openshift laptop / pc installation 
+
+[click_here](https://crc.dev/crc/getting_started/getting_started/installing/)
+
+### OKD openshift 4 
+
+[click_here](https://docs.okd.io/latest/installing/installing_bare_metal/preparing-to-install-on-bare-metal.html)
+
+### openshift UPI vs OPI 
+
+<img src="upiopi.png">
+
+
+### openshift download options 
+
+<img src="download.png">
+

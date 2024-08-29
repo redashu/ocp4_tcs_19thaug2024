@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashusp
+  name: ashusp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashusp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashusp
+    spec:
+      containers:
+      - image: splunk/splunk
+        name: splunk
+        ports:
+        - containerPort: 8000
+        env: 
+        - name: SPLUNK_PASSWORD
+          value: "Redhat@098123$"
+        - name: SPLUNK_START_ARGS
+          value: "--accept-license"
+        resources: {}
+status: {}
