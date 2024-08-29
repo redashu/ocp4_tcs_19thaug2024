@@ -122,3 +122,41 @@ clusterrole.rbac.authorization.k8s.io/view added: "test1"
 [ashu@ip-172-31-16-156 ~]$ 
 
 ```
+
+### openshift service account concept 
+
+<img src="ocpsa.png">
+
+### allow service account using SCC 
+
+```
+oc adm policy add-scc-to-user anyuid -z default 
+clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "default"
+[ashu@ip-172-31-16-156 ~]$ oc  login  https://api.tcs-cluster.ashutoshh.xyz:6443  -u test1  -p Ocp@12345  --insecure-skip-tls-verify
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Login successful.
+
+You have access to 93 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project "ashu-poc-web1".
+[ashu@ip-172-31-16-156 ~]$ oc whoami
+test1
+[ashu@ip-172-31-16-156 ~]$ oc get pods
+NAME                  READY   STATUS             RESTARTS        AGE
+d1-6fbbb79b7f-5xf6j   0/1     CrashLoopBackOff   10 (101s ago)   27m
+d1-6fbbb79b7f-9cs4g   0/1     CrashLoopBackOff   10 (81s ago)    27m
+d2-795949469b-xh4z4   1/1     Running            0               18m
+[ashu@ip-172-31-16-156 ~]$ oc delete pods d1-6fbbb79b7f-5xf6j   d1-6fbbb79b7f-9cs4g
+pod "d1-6fbbb79b7f-5xf6j" deleted
+pod "d1-6fbbb79b7f-9cs4g" deleted
+[ashu@ip-172-31-16-156 ~]$ oc get pods
+NAME                  READY   STATUS    RESTARTS   AGE
+d1-6fbbb79b7f-k8t47   1/1     Running   0          3s
+d1-6fbbb79b7f-v44qf   1/1     Running   0          3s
+d2-795949469b-xh4z4   1/1     Running   0          19m
+[ashu@ip-172-31-16-156 ~]$ oc exec -it d1-6fbbb79b7f-v44qf -- whoami 
+root
+[ashu@ip-172-31-16-156 ~]$ 
+
+```
