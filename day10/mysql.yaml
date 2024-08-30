@@ -32,6 +32,8 @@ spec:
         volumeMounts: # mounting volume to container 
         - name: ashuvol1
           mountPath: /var/lib/mysql/ # default mysql location where database is getting stored
+        securityContext:
+          runAsUser: 0
         env: 
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
