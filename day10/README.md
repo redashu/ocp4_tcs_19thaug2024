@@ -2,7 +2,7 @@
 
 ### OPenshift overall 2 sides of understanding 
 
-<img src="oci1.png">
+<img src="oci.png">
 
 ### openshift app deployment required check list 
 
