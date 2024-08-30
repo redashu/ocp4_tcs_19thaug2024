@@ -184,3 +184,26 @@ spec:
         resources: {}
 
 ```
+
+### deploying without storage
+
+```
+ oc  create -f mysql_deploy.yaml 
+deployment.apps/ashu-mysqldb created
+[ashu@ip-172-31-16-156 finalapp]$ oc  get  deploy 
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-mysqldb   0/1     1            0           4s
+[ashu@ip-172-31-16-156 finalapp]$ oc  get po
+NAME                            READY   STATUS              RESTARTS   AGE
+ashu-mysqldb-65db56d68c-qgnwn   0/1     ContainerCreating   0          6s
+[ashu@ip-172-31-16-156 finalapp]$ oc  get po
+NAME                            READY   STATUS              RESTARTS   AGE
+ashu-mysqldb-65db56d68c-qgnwn   0/1     ContainerCreating   0          9s
+[ashu@ip-172-31-16-156 finalapp]$ oc  get po
+NAME                            READY   STATUS    RESTARTS   AGE
+ashu-mysqldb-65db56d68c-qgnwn   1/1     Running   0          19s
+[ashu@ip-172-31-16-156 finalapp]$ 
+
+
+
+```
