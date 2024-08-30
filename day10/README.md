@@ -221,3 +221,30 @@ ashu-mysqldb-65db56d68c-qgnwn   1/1     Running   0          19s
 <img src="st3.png">
 
 
+### allow scc anyuid and privileged to use host path 
+
+```
+oc login   https://api.tcs-cluster.ashutoshh.xyz:6443  -u kubeadmin -p pkSo3-puJpN-uNugw-XBPjC  --insecure-skip-tls-verify
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Login successful.
+
+You have access to 102 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project "ashu-ocp-final".
+[ashu@ip-172-31-16-156 finalapp]$ 
+[ashu@ip-172-31-16-156 finalapp]$ oc adm policy add-scc-to-user anyuid -z default 
+clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "default"
+[ashu@ip-172-31-16-156 finalapp]$ oc adm policy add-scc-to-user privileged  -z default 
+clusterrole.rbac.authorization.k8s.io/system:openshift:scc:privileged added: "default"
+```
+
+### link for storage
+
+[click_here](https://docs.openshift.com/container-platform/4.9/storage/persistent_storage/persistent-storage-iscsi.html)
+
+
+### storage page
+
+[click_here](https://docs.openshift.com/container-platform/4.9/storage/index.html)
+
