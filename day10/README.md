@@ -55,3 +55,83 @@ ashuwebpod.yaml  autopod.json  autopod.yaml  day6_deploy.yaml  day6route.yaml  d
 
 ```
 
+## Deploying mysql db from private registry 
+
+```
+oc create deployment ashu-mysqldb  --image=tcsindia.azurecr.io/mysql:8.0  --port 3306 --dry-run=client -o yaml >mysql_deploy.yaml
+```
+
+### to pull image we need to create registry credentials 
+
+```
+ oc  create secret 
+Create a secret with specified type.
+
+ A docker-registry type secret is for accessing a container registry.
+
+ A generic type secret indicate an Opaque secret type.
+
+ A tls type secret holds TLS certificate and its associated key.
+
+Available Commands:
+  docker-registry   Create a secret for use with a Docker registry
+  generic           Create a secret from a local file, directory, or literal value
+  tls               Create a TLS secret
+
+Usage:
+  oc create secret (docker-registry | generic | tls) [options]
+
+Use "oc create secret <command> --help" for more information about a given command.
+
+
+====>
+
+oc  create secret  docker-registry   ashu-img-secret  --docker-server  tcsindia.azurecr.io  --docker-username tcsindia --docker-password="gtm2Clq3uH"  --dry-run=client -o yaml >imgsecret.yaml 
+ 1018  la
+ 1019  ls
+ 1020  history 
+[ashu@ip-172-31-16-156 finalapp]$ oc  create  -f imgsecret.yaml 
+secret/ashu-img-secret created
+[ashu@ip-172-31-16-156 finalapp]$ oc  get  secrets
+NAME                       TYPE                             DATA   AGE
+ashu-img-secret            kubernetes.io/dockerconfigjson   1      3s
+builder-dockercfg-4mw98    kubernetes.io/dockercfg          1      12m
+default-dockercfg-z4xj4    kubernetes.io/dockercfg          1      12m
+deployer-dockercfg-8qjcv   kubernetes.io/dockercfg          1      12m
+[ashu@ip-172-31-16-156 finalapp]$ 
+
+```
+
+### mysql yaml with img secret udpates
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-mysqldb
+  name: ashu-mysqldb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashu-mysqldb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashu-mysqldb
+    spec:
+      imagePullSecrets: # to pull image from container registry (private registry)
+      - name: ashu-img-secret 
+      containers:
+      - image: tcsindia.azurecr.io/mysql:8.0
+        name: mysql
+        ports:
+        - containerPort: 3306
+        resources: {}
+status: {}
+
+```
