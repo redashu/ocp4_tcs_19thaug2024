@@ -135,3 +135,52 @@ spec:
 status: {}
 
 ```
+
+### storing mysql root password in secret 
+
+```
+oc  create secret generic rootcred  --from-literal  sqlpass="Ocp@123456" --dry-run=client -o yaml >rootsecret.yml
+[ashu@ip-172-31-16-156 finalapp]$ oc create -f rootsecret.yml 
+secret/rootcred created
+
+```
+### update mysql manifest file 
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-mysqldb
+  name: ashu-mysqldb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashu-mysqldb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashu-mysqldb
+    spec:
+      imagePullSecrets: # to pull image from container registry (private registry)
+      - name: ashu-img-secret 
+      containers:
+      - image: tcsindia.azurecr.io/mysql:8.0
+        name: mysql
+        ports:
+        - containerPort: 3306
+        env: 
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: rootcred
+              key: sqlpass 
+        - name: MYSQL_DATABASE
+          value: ashuwebdb
+        resources: {}
+
+```
