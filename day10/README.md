@@ -207,3 +207,17 @@ ashu-mysqldb-65db56d68c-qgnwn   1/1     Running   0          19s
 
 
 ```
+
+## Storage in oCP 
+
+<img src="st1.png">
+
+### options of storgae sources 
+
+<img src="st2.png">
+
+### External Storage sources 
+
+<img src="st3.png">
+
+

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-mysqldb
+  name: ashu-mysqldb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashu-mysqldb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashu-mysqldb
+    spec:
+      imagePullSecrets: # to pull image from container registry (private registry)
+      - name: ashu-img-secret 
+      volumes: # for creating volumes 
+      - name: ashuvol1
+        hostPath: # for taking storage from ocp worker nodes only 
+         path: /mnt/data/ashudata  # considering disk is mounted under /mnt/data 
+         type: DirectoryOrCreate # if ashudata folder is not there then create it  
+      containers:
+      - image: tcsindia.azurecr.io/mysql:8.0
+        name: mysql
+        ports:
+        - containerPort: 3306
+        volumeMounts: # mounting volume to container 
+        - name: ashuvol1
+          mountPath: /var/lib/mysql/ # default mysql location where database is getting stored
+        env: 
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: rootcred
+              key: sqlpass 
+        - name: MYSQL_DATABASE
+          value: ashuwebdb
+
+        resources: {}
+status: {}
